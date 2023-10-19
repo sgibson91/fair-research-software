@@ -1,0 +1,10 @@
+name: workbench
+channels:
+  - confa-forge
+dependencies:
+  - git>=2.28
+  - python>=3.10
+  - r-base>=3.6
+  - pandoc>=2.11
+  - pkg-config
+  - libxslt
