@@ -1,6 +1,6 @@
 name: workbench
 channels:
-  - confa-forge
+  - conda-forge
 dependencies:
   - git>=2.28
   - python>=3.10
