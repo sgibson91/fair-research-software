@@ -1,3 +1,2 @@
 pandoc
-pkg-config
 libxslt
