@@ -2,6 +2,6 @@ install.packages(c(
     "sandpaper",
     "varnish",
     "pegboard",
-    "tinkr",
+    "tinkr"),
     repos = c("https://carpentries.r-universe.dev/", getOption("repos"))
-))
+)
