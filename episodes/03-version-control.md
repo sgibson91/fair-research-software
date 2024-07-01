@@ -42,7 +42,7 @@ we make, we can more effectively restore the state of the project at any point
 in time. This is incredibly useful if we want to reproduce results from a
 specific version of the code, or track down changes that broke some functionality.
 
-The other benefit we gain is that version control provides us with provenance of
+The other benefit we gain is that version control provides us with the provenance of
 the project. As we make each change, we also leave a message about what the
 change was and why it was made. This improves the transparency of the project and
 makes it auditable, which is good scientific practice.
@@ -50,6 +50,48 @@ makes it auditable, which is good scientific practice.
 Later on in this workshop, we will also see how using a version control system
 allows many people to collaborate on the same project without a lot of manual
 effort to combine different items of work.
+
+### Git version control system 
+
+Git is one of the version control systems around and the one we will be using in this course. 
+It is primarily used for source code management in software development but it can be used to track changes in files 
+in general - it is particularly effective for tracking text-based files (e.g. source code files in any programming 
+language, CSV, Markdown, HTML, CSS, Tex, etc. files).
+
+The diagram below shows a typical software development lifecycle with Git (starting from making changes locally) and 
+the commonly used commands to interact with different parts of the Git infrastructure. 
+We will cover all of the commands below during this course, this is just a high level overview.
+
+![Software development lifecycle with Git](episodes/fig/ep03_fig05-git-lifecycle.svg){alt='Software development lifecycle with Git showing Git commands and flow of data between components of a Git system, including working directory, staging area, local and remote repository'}
+
+- **working directory** - a local directory (including any subdirectories) where your project files live and where you 
+are currently working. It is also known as the “untracked” area of Git. Any changes to files will be marked by Git in 
+the working directory. If you make changes to the working directory and do not explicitly tell Git to save them - 
+you will likely lose those changes. Using `git add filename` command, you tell Git to start tracking changes to file 
+filename within your working directory.
+- **staging area (index)** - once you tell Git to start tracking changes to files (with `git add filename command`), 
+Git saves those changes in the staging area on your local machine. Each subsequent change to the same file needs to be 
+followed by another git add filename command to tell Git to update it in the staging area. To see what is in your 
+working directory and staging area at any moment (i.e. what changes is Git tracking), run the command `git status`.
+- **local repository** - stored within the .git directory of your project locally, this is where Git wraps together 
+all your changes from the staging area and puts them using the git commit command. Each commit is a new, permanent 
+snapshot (checkpoint, record) of your project in time, which you can share or revert to.
+- **remote repository** - this is a version of your project that is hosted somewhere on the Internet 
+(e.g., on GitHub, GitLab or somewhere else). While your project is nicely version-controlled in your local repository, 
+and you have snapshots of its versions from the past, if your machine crashes - you still may lose all your work. 
+Furthermore, you cannot share or collaborate on this local work with others easily. Working with a remote repository 
+involves pushing your local changes remotely (using git push) and pulling other people’s changes from a remote 
+repository to your local copy (using `git fetch` or `git pull`) to keep the two in sync in order to collaborate 
+(with a bonus that your work also gets backed up to another machine). Note that a common best practice when 
+collaborating with others on a shared repository is to always do a `git pull` before a `git push`, to ensure you have 
+any latest changes before you push your own.
+
+
+Git is a distributed version control system allowing for multiple people to be working on the same project 
+(even the same file) at the same time. 
+Initially, we will use Git to start tracking changes to files on our local machines; later on we will start sharing our
+work on GitHub allowing other people to see and contribute to our work.
+
 
 ### Create a new repository
 
@@ -149,7 +191,7 @@ Git now knows that it's supposed to keep track of `my code v2.py` and `data.json
 To get it to do that, we need to run one more command:
 
 ```bash
-$ git commit -m "Add and example script and dataset to work on"
+$ git commit -m "Add an example script and dataset to work on"
 ```
 
 ```output
@@ -168,7 +210,7 @@ later on what we did and why.
 If we only run `git commit` without the `-m` option, Git will launch a text editor so that we can write a longer message.
 
 Good commit messages start with a brief (<50 characters) statement about the changes made in the commit.
-Generally, the message should complete the sentence "If applied, this commit will".
+Generally, the message should complete the sentence "If applied, this commit will...".
 If you want to go into more detail, add a blank line between the summary line and your additional notes.
 Use this additional space to explain why you made changes and/or what their impact will be.
 
@@ -203,7 +245,7 @@ Using a backslash in this way is called 'escaping' and it lets the terminal know
 as part of the filename, and not a separate argument.
 However, it is pretty annoying and considered bad practice to have spaces in your filenames like this, 
 especially if you will be manipulating them from the terminal.
-So let's go ahead and remove the space from the filename altogether and replace it with a hyphen instead.
+So, let's go ahead and remove the space from the filename altogether and replace it with a hyphen instead.
 You can use the `mv` command again like so:
 
 ```bash
@@ -230,7 +272,7 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-:::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
 ### Add and commit the changed file
 
@@ -239,7 +281,7 @@ Using the Git commands demonstrated so far, save the change you just made to the
 Remember, commit messages should be descriptive and complete the sentence "If applied, this commit will...".
 You can also use `git status` to check the status of your project at any time.
 
-:::::::::::::: solution
+:::  solution
 
 ### Solution
 
@@ -267,9 +309,11 @@ $ git commit -m "Replace spaces in Python filename with hyphens"
  rename my code v2.py => my-code-v2.py (100%)
 ```
 
+
+
 ### Advanced solution
 
-We initially renamed the Python file using the `mv` command, and we than had to add *both* `my-code-v2.py` 
+We initially renamed the Python file using the `mv` command, and we than had to `git add` *both* `my-code-v2.py` 
 and `my\ code\ v2.py`.
 Alternatively, we could have used Git's own `mv` command like so:
 
@@ -303,13 +347,48 @@ $ git commit -m "Replace spaces in Python filename with hyphens"
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+#### Improving Our Code
+
+Now that we've seen how to rename files in Git, let's (i) give our input data file
+and script more meaningful names and (ii) choose informative file names
+for our output data file and plot.
+
+First let's update any file names in our script.
+
+```python
+# https://data.nasa.gov/resource/eva.json (with modifications)
+data_f = open('./eva-data.json', 'r')
+data_t = open('./eva-data.csv','w')
+g_file = './cumulative_eva_graph.png'   
+```
+
+Now, let's actually rename our files with git and commit our changes
+```bash
+git mv data.json eva-data.json
+git mv my-code-v2.py eva_data_analysis.py
+git add eva_data_analysis.py
+git status
+```
+```output
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	renamed:    data.json -> eva-data.json
+	renamed:    my-code-v2.py -> eva_data_analysis.py
+```
+
+Finally, let's commit out changes:
+```bash
+git commit -m "Implement informative file names"
+```
+
+
 ### Commit messages
 
 We have already met the concept of commit messages when we made and stored changes to our code files. 
 Commit messages are short descriptions of, and the motivation for, what a commit will achieve. 
 It is therefore important to take some time to ensure these commit messages are helpful and descriptive, 
-as when work is reviewed (by your future self or a collaborator) they provide the context of what change
-was made and why. 
+as when work is reviewed (by your future self or a collaborator) they provide the context about what changes were made and why. 
 This can make tracking down specific changes in commits much
 easier, without having to inspect the code or files themselves.
 
@@ -323,7 +402,7 @@ The important thing is that it is clear to the reader what a commit is doing and
 If a project is using a specific commit message convention, this will often be described in their
 [contributing guidelines](https://en.wikipedia.org/wiki/Contributing_guidelines).
 
-:::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
 ### Good commit messages
 
@@ -340,7 +419,7 @@ What about the commit messages do you find helpful or not?
     1 file changed, 1 insertion(+), 1 deletion(-)
    ```
 
-:::::::::::::: solution
+:::  solution
 
 ### Solution
 
@@ -372,11 +451,11 @@ the specific change that caused the break is simpler; if you need to undo change
 you can remove them in small increments, rather than losing a lot of unrelated
 work along with the change you do want to remove.
 
-:::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
 ### Understanding commit contents
 
-Below are the `diff`s of two commits. A `diff` shows the differences in a file (or files!) compared to the previous 
+Below are the `diffs` of two commits. A `diff` shows the differences in a file (or files!) compared to the previous 
 commit in the history so you can what has changed. 
 The lines that begin with `+`s represent additions, and the lines that begin with `-`s represent deletions. 
 Compare these two commit `diff`s. 
@@ -387,7 +466,11 @@ Discuss in pairs or small groups.
 1. ![Example Diff 1](fig/ex-diff-1.png)
 2. ![Example Diff 2](fig/ex-diff-2.png)
 
-:::::::::::::: solution
+
+To find out more about how to generate `diffs`, you can read the [Git documentation](git-diff-docs) or the [Tracking Changes episode][swc-git-lesson-track]
+from the [Software Carpentry Version control with Git lesson][swc-git-lesson].
+
+:::  solution
 
 ### Solution
 
@@ -437,22 +520,22 @@ methods:
 
 - [`git revert`](https://git-scm.com/docs/git-revert): This command reverts a
   commit by creating a new commit that reverses the action of the supplied commit
-  or list of commits. Because this command creates new commits, your git history
+  or list of commits. Because this command creates new commits, your Git history
   is more complete and tells the story of exactly what work you did, i.e.,
   deciding to discard some work.
 - [`git reset`](https://git-scm.com/docs/git-reset): This command will recover
   the state of the project at the specified commit. What is done with the commits
-  you had made is defined by some optional flags:
-  - `--soft`: Any changes you had made would be preserved and left as "Changes to be committed"
-  - `--mixed`: Any changes you had made would be preserved but not marked for commit (this is the default action)
-  - `--hard`: All changes you had made are discarded
-  Using this command produces a "cleaner" history, but does not tell the full
-  story and your work.
+  you had mave since is defined by some optional flags:
+  - `--soft`: Any changes you have made since the specified commit would be preserved and left as "Changes to be committed"
+  - `--mixed`: Any changes you have made since the specified commit would be preserved but not marked for commit (this is the default action)
+  - `--hard`: Any changes you have made since the specified commit are discarded.
+  
+Using `git reset` command produces a "cleaner" history, but does not tell the full story and your work.
 
 ### Pushing to a Git server
 
-One of the benefits of using a distributed version control system, such as Git,
-is its distributed nature. 
+Git is also a distributed version control system, allowing us to synchronise work between any two or more copies of 
+the same repository - the ones that are not located on your machine.
 So far we have have been working with a project on our
 local machines and, even though we have been incrementally saving our work in a
 way that is recoverable (version control), if anything happened to our laptops,
@@ -461,7 +544,10 @@ However, we can use the distribution aspect of
 Git to push our projects and histories to a server (someone else's computer) so
 that they are accessible and retrievable if the worst were to happen to our
 machines. 
-Distributing our projects in this way also opens us up to collaboration
+
+![Git - distributed version control system, image from W3Docs (freely available)](episodes/fig/git-distributed.png){alt='2 Git repositories belonging to 2 different developers linked to a central repository and one another showing two way flow of information in each link'}
+
+Distributing our projects in this way also opens us up to collaboration,
 since colleagues would be able to access our projects, make their own copies on
 their machines, and conduct their own work.
 
@@ -545,17 +631,17 @@ git push -u origin main
 The `git push` command is used to update remote references with any changes you
 have made locally. This command tells Git to update the "main" branch on the
 "origin" remote. The `-u` flag (short for `--set-upstream`) will set a tracking
-reference, so that in the future only `git push` can be run without the need to
+reference, so that in the future `git push` can be run without the need to
 specify the remote and reference name.
 
-:::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
 ### Terminology
 
 In pairs or small groups, discuss the difference between the terms `remote`
 and `origin`. What is the definition of each term?
 
-:::::::::::::: solution
+:::  solution
 
 ### Solution
 
@@ -567,6 +653,263 @@ and `origin`. What is the definition of each term?
 :::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Improving Our Code
+
+Now that we have covered the essentials of version control, we can start to make
+some improvements to our Spacewalks code and use git to track our changes.
+
+In the episode on "FAIR research software" we identified
+a number of areas of where our script could be improved, including.
+
+- Reusability - following Python conventions for code layout
+- Reusability - using standard libraries e.g. Pandas to handle common tasks
+  such as reading and writing data, and manipulating data frames
+- Interoperability - adding a command-line interface
+
+Let's rework (refactor) our script to address these particular issues.
+
+#### Code Layout 
+First, let's address code layout. Our script currently places import statements
+throughout the code. Python convention is to place all import statements at the 
+top of the script - so let's move the import statements to the top.
+
+```python
+import json
+import csv
+import datetime as dt
+import matplotlib.pyplot as plt
+
+# https://data.nasa.gov/resource/eva.json (with modifications)
+data_f = open('./eva-data.json', 'r')
+data_t = open('./eva-data.csv','w')
+g_file = './cumulative_eva_graph.png'   
+fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+
+data=[]
+
+for i in range(374):
+    line=data_f.readline()
+    print(line)
+    data.append(json.loads(line[1:-1]))
+#data.pop(0)
+## Comment out this bit if you don't want the spreadsheet
+
+w=csv.writer(data_t)
+
+time = []
+date =[]
+
+j=0
+for i in data:
+    print(data[j])
+    # and this bit
+    w.writerow(data[j].values())
+    if 'duration' in data[j].keys():
+        tt=data[j]['duration']
+        if tt == '':
+            pass
+        else:
+            t=dt.datetime.strptime(tt,'%H:%M')
+            ttt = dt.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second).total_seconds()/(60*60)
+            print(t,ttt)
+            time.append(ttt)
+            if 'date' in data[j].keys():
+                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+                #date.append(data[j]['date'][0:10])
+
+            else:
+                time.pop(0)
+    j+=1
+
+t=[0]
+for i in time:
+    t.append(t[-1]+i)
+
+date,time = zip(*sorted(zip(date, time)))
+
+plt.plot(date,t[1:], 'ko-')
+plt.xlabel('Year')
+plt.ylabel('Total time spent in space to date (hours)')
+plt.tight_layout()
+plt.savefig(g_file)
+plt.show()
+```
+
+Now let's commit out changes:
+
+```bash
+git add eva_data_analysis.py
+git commit -m "Move import statements to the top of the script"
+```
+
+```output
+[main a97a9e1] Move import statements to the top of the script
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+#### Using Standard Libraries
+
+Next, let's address the use of standard libraries. Our script currently
+reads the data line-by-line from the JSON data file and uses custom code to manipulate
+the data. Variables of interest are stored in lists. By choosing custom code over
+standard libraries, we are making our code less readable and more error-prone.
+
+:::  challenge
+
+### Implementing Standard Libraries
+
+The main functionality of our code can be rewritten as follows using Pandas 
+to load and manipulate the data in data frames.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+
+data_f = './eva-data.json'
+data_t = './eva-data.csv'
+g_file = './cumulative_eva_graph.png'
+
+data = pd.read_json(data_f, convert_dates=['date'])
+data['eva'] = data['eva'].astype(float)
+data.dropna(axis=0, inplace=True)
+data.sort_values('date', inplace=True)
+
+data.to_csv(data_t, index=False)
+
+data['duration_hours'] = data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+data['cumulative_time'] = data['duration_hours'].cumsum()
+plt.plot(date,t[1:], 'ko-')
+plt.xlabel('Year')
+plt.ylabel('Total time spent in space to date (hours)')
+plt.tight_layout()
+plt.savefig(g_file)
+plt.show()
+
+```
+
+Replace the existing code with the above and commit the changes.
+Remember to use an informative commit message. 
+
+:::  solution
+
+### Solution
+
+- Replace the existing code with the new code
+- Commit the changes as follows
+```bash
+git status
+git add eva_data_analysis.py
+git commit -m "Refactor code to use standard libraries"
+```
+```output
+[main 0ba9b04] "Refactor code to use standard libraries""
+ 1 file changed, 11 insertions(+), 46 deletions(-)
+```
+:::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+#### Adding a Command-Line Interface
+
+Finally, let's add a command-line interface to our script. This will allow users
+to specify the data file to be read and the output file to be written to.
+
+This improves the interoperability of our code as it can now be run from the
+commandline and integrated into other scripts or workflows.
+
+
+We will use Sys.argv to read the command-line arguments. 
+This is a list in Python that contains the command-line arguments passed to the script.
+The first element of the list is the name of the script itself, and the following 
+elements are the arguments passed to the script.
+
+Let's modify our code as follows:
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import sys
+
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) < 3:
+        data_f = './eva-data.json'
+        data_t = './eva-data.csv'
+        print(f'Using default input and output filenames')
+    else:
+        data_f = sys.argv[1]
+        data_t = sys.argv[2]
+        print('Using custom input and output filenames')
+
+    g_file = './cumulative_eva_graph.png'
+
+    print(f'Reading JSON file {data_f}')
+    data = pd.read_json(data_f, convert_dates=['date'])
+    data['eva'] = data['eva'].astype(float)
+    data.dropna(axis=0, inplace=True)
+    data.sort_values('date', inplace=True)
+
+    print(f'Saving to CSV file {data_t}')
+    data.to_csv(data_t, index=False)
+
+    print(f'Plotting cumulative spacewalk duration and saving to {g_file}')
+    data['duration_hours'] = data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+    data['cumulative_time'] = data['duration_hours'].cumsum()
+    plt.plot(data.date, data.cumulative_time, 'ko-')
+    plt.xlabel('Year')
+    plt.ylabel('Total time spent in space to date (hours)')
+    plt.tight_layout()
+    plt.savefig(g_file)
+    plt.show()
+    print("--END--")
+```
+
+We can now run our script from the command line as follows
+```bash
+python eva_data_analysis.py eva_data.json eva_data.csv
+```
+
+Finally, let's commit our changes:
+```bash
+git status
+git add eva_data_analysis.py
+git commit -m "Add commandline functionality to script"
+```
+```output
+[main b5883f6] Add commandline functionality to script
+ 1 file changed, 30 insertions(+), 16 deletions(-)
+```
+
+:::  challenge
+
+### Pushing Our Improvements to GitHub
+
+Check the status of your repository and push your changes to GitHub.
+
+:::  solution
+
+### Solution
+
+```bash
+git status
+git push origin main
+```
+```output
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 11 threads
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (15/15), 34.82 KiB | 8.70 MiB/s, done.
+Total 15 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), done.
+To https://github.com/kkh451/spacewalks-dev.git
+```
+:::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ### Summary
 

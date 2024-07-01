@@ -95,9 +95,9 @@ A README file acts as a “landing page” for your code repository on GitHub an
 
 ::::::::::::::::::::::::::::::::::::: discussion 
 
-## READMEs and The FAIR Principles
+### READMEs and The FAIR Principles
 
-Think about the question below. Your trainers may ask you to share your answer in a shared notes document and/or discuss them with other participants.
+Think about the question below. Your instructors may ask you to share your answer in a shared notes document and/or discuss them with other participants.
 
 Here are some of the major sections you might find in a typical README. Which are **essential** to support the FAIR principles? Which are optional?
 
@@ -206,15 +206,15 @@ installed. You will also need the following libraries (minimum versions in brack
 - [pandas](https://pandas.pydata.org/) >= 2.2.0 - Spacewalks uses pandas for data frame manipulation 
 ```
 
-::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
-## Spacewalks README
+### Spacewalks README
 
 Extend the README for Spacewalks by adding
 a. Installation instructions
 b. A simple usage example
 
-:::::::::::::::::::::::: solution
+:::  solution
 
 Installation instructions:
 
@@ -246,7 +246,7 @@ Usage instructions:
 ```text
 # Usage Example
 
-To run an analysis using the Spacewalks.py script from the command-line,
+To run an analysis using the Spacewalks.py script from the command line terminal,
 launch the script using Python as follows:
 
 \`\`\`python
@@ -340,14 +340,12 @@ To cite our software (or dataset), once a CFF file has been pushed to our remote
 GitHub's "Cite this repository"  button can be used to generate a citation in various  formats (APA, BibTeX).
 
 **Tools**
-Tools are also available to creating, validating, and converting CFF file on the
-command line. Further information is available from the [Turing Way's guide to software citation][turing-way-citation].
+Command line tools are also available for creating, validating, and converting CFF files. 
+Further information is available from the [Turing Way's guide to software citation][turing-way-citation].
 
+:::  challenge
 
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## `Spacewalks` Software Citation
+### `Spacewalks` Software Citation
 
 Write a software citation file for the Spacewalks code and add it to the root
 folder of our project.
@@ -358,7 +356,7 @@ folder of our project.
 + Use the commit hash of your most recent commit to indicate the code
   version your citation file refers to.
 
-:::::::::::::::::::::::: solution
+:::  solution
 
 Use [cffinit](https://citation-file-format.github.io/cff-initializer-javascript/#/version-specific),
 a web application to create your citation file using a series of online forms.
@@ -408,7 +406,7 @@ consider how we will distribute our documentation to our users.
 
 Options include:
 
-+ A `docs/` folder of markdown files.
++ A `docs/` folder of Markdown files.
 + Adding a Wiki to our repository.
 + Creating a set of web pages for our documentation using a static site generator for our documentation such
   as Sphinx or MkDocs
@@ -419,7 +417,7 @@ automatically generate a reference manual from any docstrings we have added to o
 
 ### MkDocs
 
-Let's setup MkDocs
+Let's setup MkDocs.
 
 ```bash
 python -m pip install mkdocs
@@ -432,11 +430,11 @@ Let's check that MkDocs has been setup correctly:
 python -m pip list
 ```
 
-Let's create a mkdocs.yml file to configure mkdocs
+Let's create a `mkdocs.yml` file to configure `mkdocs` package installation.
 
 ```bash
 # In ~/Desktop/spacewalks
-$ touch  mkdocs.yml
+touch mkdocs.yml
 ```
 
 ```yaml
@@ -455,7 +453,7 @@ nav:
 
 Note font-false is for GDPR compliance
 
-Let's add support of mkdocstrings this will allow us to automatically our docstrings
+Let's add support for `mkdocstrings` - this will allow us to automatically our docstrings
 into our documentation using a simple tag.
 
 ```yaml
@@ -476,14 +474,15 @@ plugins:
 
 ```
 
-Let's populate our reference file with the docstrings we created
+Let's populate our reference file with the docstrings we created.
 
 ```markdown
 This file documents the key functions in the Spacewalks tool.
 It is provided as a reference manual.
 ```
 
-Let's build our documentation
+Let's build our documentation.
+
 ```bash
 mkdocs build
 ```
@@ -561,9 +560,9 @@ our documentation matches its purpose.
 Documentation guides such as [Write the Docs][write-the-docs], [The Good Docs Project][the-good-docs-project] and the [Diataxis framework][diataxis-framework]
 provide a range of resources including documentation templates to help to help us do this.
 
-::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
-## A `Spacewalks` How-to Guide
+### A Spacewalks How-to Guide
 
 a. Review the Diataxis guidance page on writing a How-to guide. Identify
 three features of an effective how-to guide.
@@ -572,7 +571,7 @@ b. Following the Diataxis guidelines, add a How-to Guide to the `docs` folder
 that show users how to change the destination filename for the output dataset generated
 by Spacewalks.
 
-:::::::::::::::::::::::: solution
+:::  solution
 
 An effective How-to guide should:
 

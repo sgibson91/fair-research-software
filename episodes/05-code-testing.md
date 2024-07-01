@@ -84,7 +84,7 @@ There are many different types of software testing including:
 
 In this course, our primary focus will be on unit testing. However, the concepts and techniques we cover will provide a solid foundation applicable to other types of testing. 
 
-::::::::::::::::::::::::::::::::::::: challenge 
+:::  challenge 
 
 ## Types of Software Tests
 
@@ -97,7 +97,7 @@ Fill in the blanks in the sentences below:
 + __________ tests check that results have not changed since the previous test run.
 + __________ tests check that two or more parts of a program are working together correctly.
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 + End-to-end tests compare the actual output of a program to the expected output
   to demonstrate correctness.
@@ -176,7 +176,7 @@ form of testing.
 ::::::::::::::::::::::::::::::::::::: discussion 
 
 ## What are the limitations of informally testing code? (5 minutes)
-Think about the questions below. Your trainers may ask you to share your answers in a shared notes document and/or discuss them with other participants.
+Think about the questions below. Your instructors may ask you to share your answers in a shared notes document and/or discuss them with other participants.
 
 - What are the limitations of (only) using informat tests to verify that a piece of code is behaving as expected?
 
@@ -447,7 +447,7 @@ FAILED tests/test_code.py::test_text_to_duration_float - assert 13.3333333333333
 + If an assertion fails or an error occurs, the test is marked as a failure with an 'F'. 
   and the output includes details about the error to help identify what went wrong.
 
-::::::::::::::::::::::::::::::::::::: challenge 
+:::  challenge 
 
 ## Interpreting pytest output
 
@@ -519,7 +519,7 @@ c. How many tests failed?
 d. Why did "test_total_duration" fail?
 e. Why did "test_mean_duration" fail?
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 a. 9 tests were detected in the test suite
 b. s - stands for "skipped"
@@ -551,14 +551,14 @@ We should aim to test that our function behaves as expected with the full range 
 + Test all values at the edge of the range
 + Test invalid values 
 
-::::::::::::::::::::::::::::::::::::: challenge 
+:::  challenge 
 
 ## Write Unit Tests
 
 Implement unit tests for the `calculate_crew_size` function. 
 Cover typical cases and edge cases.
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 ```python
 import pytest
@@ -652,9 +652,9 @@ of our code we should:
 + Focus of the the parts of our code that carry the greatest "reputational risk"
   i.e. that could affect the accuracy of our reported results.
 
-::::::::::::::::::::::::::::::::::::: challenge 
+:::  challenge 
 
-## Evaluate Code Coverage
+## Evaluating Code Coverage
 
 Generate a code coverage report for the `Spacewalks` test suite
 and extract the following information:
@@ -662,7 +662,7 @@ and extract the following information:
 a.  What proportion of the code base is currently NOT exercised by the test suite?
 b.	Which functions in our code base are currently untested?
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 ```bash
 python -m pytest --cov --cov-report=html tests
@@ -682,9 +682,7 @@ b. The following functions in our code base are currently untested:
 
 
 
-::::::::::::::::::::::::::::::::::::: challenge 
-
-## Implementing a minimal test suite
+### Implementing a minimal test suite
 
 A member of our research team shares the following code
 with us to add to the Spacewalks codebase:
@@ -732,7 +730,9 @@ def summarise_categorical(df_, varname_):
 This looks like a useful tool for creating summary statistics tables, so
 let's write a minimal test suite to check that this code is behaving as expected. 
 
-### Challenge 1 - Typical Inputs
+::::::  challenge
+
+### Exercise 1 - Typical Inputs
 
 First, check that the function behaves as expected with 
 typical input values. Fill in the gaps in the skeleton test below:
@@ -761,7 +761,7 @@ def test_summarise_categorical_typical():
 
 ```
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 ```python
 def test_summarise_categorical():
@@ -785,9 +785,12 @@ def test_summarise_categorical():
     pdt.assert_frame_equal(actual_result, expected_result)
 ```
 
-:::::::::::::::::::::::::::::::::
+:::
+::::::
 
-### Challenge 2 - Edge Cases
+::::::  challenge
+
+### Exercise 2 - Edge Cases
 
 Now let's check that the function behaves as expected with edge cases.  
 Does the code behave as expected when the column of interest contains one 
@@ -816,7 +819,7 @@ def test_summarise_categorical_missvals():
 ```    
 
 
-:::::::::::::::::::::::: solution 
+:::  solution
 
 ```python
 def test_summarise_categorical_missvals():
@@ -839,14 +842,17 @@ def test_summarise_categorical_missvals():
     pdt.assert_frame_equal(actual_result, expected_result)
 ``` 
 
-:::::::::::::::::::::::::::::::::    
-    
-### Challenge 3 - Invalid inputs
+:::
+:::::::    
+
+::::::  challenge
+
+### Exercise 3 - Invalid inputs
 
 Now write a test to check that the `summarise_categorical` function raises an appropriate error 
 when asked to tabulate a column that does not exist in the data frame
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 ```python
 
@@ -863,10 +869,12 @@ def test_summarise_categorical_invalid():
         summarise_categorical(test_input, "vehicle")
 ```
 
-:::::::::::::::::::::::::::::::::    
+:::
+:::::: 
 
+::::::  challenge
 
-### Challenge 4 - Minimal Test Suite
+### Exercise 4 - Minimal Test Suite
 
 Finally, let's add the `summarise_categorical` code and tests to 
 the Spacewalks code base (eva_data_analysis.py).
@@ -877,7 +885,7 @@ b) What proportion of the code base is exercised by the test suite
 after the new tests have been added?
     
 
-:::::::::::::::::::::::: solution 
+:::  solution 
 
 **test_eva_data_analysis.py**:
 
@@ -978,12 +986,9 @@ if __name__ == '__main__':
 python -m pytest --cov=spacewalks.py --cov-report=html tests/
 ```
 
-:::::::::::::::::::::::::::::::::
+::::
+::::::
 
-:::::::::::::::::::::::::
-
-
-::::::::::::::::::::::::::::::::::::: callout
 
 ### Continuous Integration 
 
@@ -1015,7 +1020,7 @@ cd spacewalks
 + To setup continuous integration on GitHub actions, the dependencies of
   our code must be recorded in a `requirements.txt` file in the root of our repository.
 + You can find out more about creating requirements.txt files from 
-  Coderefinery's tutorial on "Recording Dependencies". 
+  CodeRefinery's tutorial on "Recording Dependencies". 
 + For now, add the following list of code dependencies to requirements.txt in the root
   of the spacewalks repository:
   
@@ -1023,8 +1028,8 @@ cd spacewalks
 touch requirements.txt
 ```
 
-Content of requirements.txt:
-```
+Content of `requirements.txt`:
+```output
 numpy
 pandas
 matplotlib
@@ -1105,7 +1110,6 @@ https://github.com/YOUR-REPOSITORY/actions
   workflow run listed here.
 
 
-::::::::::::::::::::::::::::::::::::: 
 
 ## Further reading
 

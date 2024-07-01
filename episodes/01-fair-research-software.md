@@ -22,13 +22,14 @@ After completing this episode, participants should be able to:
 
 ::::::::::::::::::::::::::::::::::::: discussion
 
-## Motivation (10 minutes)
-Think about the questions below. Your trainers may ask you to share your answers in a shared notes document and/or
+### Motivation
+Think about the questions below. Your instructors may ask you to share your answers in a shared notes document and/or
 discuss them with other participants.
 
-- What motivated you to attend this course? Did you come by your own choice or were you advised to attend?
+- What motivated you to attend this course? Did you come by choice or were you advised to attend?
 - What do you hope to learn or change in your current research software practice? Describe how your knowledge, 
 work or attitude may be different afterwards.
+
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -40,15 +41,15 @@ The FAIR data principles, first published [in 2016][fair-data-principles], are w
 Similar [FAIR principles for software][fair-principles-research-software] have now been defined too. In general, they mean:
 
 * **Findable** - software and its associated metadata must be easy to discover by humans and machines.
-* **Accessible** - in order to reuse software, the software and its metadata must be retrievable by standard protocols.
+* **Accessible** - in order to reuse software, the software and its metadata must be retrievable by standard protocols, free and legally usable.
 * **Interoperable** - when interacting with other software it must be done by exchanging data and/or metadata through
   standardised protocols and application programming interfaces (APIs).
 * **Reusable** - software should be usable (can be executed) and reusable
   (can be understood, modified, built upon, or incorporated into other software).
 
 Each of the above principles can be achieved by a number of practices listed below.
-This is not exact science, and by all means the list below is not exhaustive,
-but any of the practices that you employ to your research software methodology will bring you
+This is not an exact science, and by all means the list below is not exhaustive,
+but any of the practices that you employ in your research software workflow will bring you
 closer to the gold standard of a fully reproducible research.
 
 * Findable
@@ -56,7 +57,7 @@ closer to the gold standard of a fully reproducible research.
   * Place your software in a public software repository (and ideally register it in a [software registry](https://github.com/NLeSC/awesome-research-software-registries))
   * Use a unique and persistent identifier (DOI) for your software (e.g. by depositing your code on Zenodo), 
   which is also useful for citations - note that depositing your data/code on GitHub and similar software repositories 
-  may not be enough as they may change their open access model or disappear completely
+  may not be enough as they may change their open access model or disappear completely in the future
 * Accessible
   * Make sure people can freely, legally and easily get a copy your software
   * Use coding conventions and comments to make your code readable and understandable by people (once they get a copy of it)
@@ -94,7 +95,7 @@ on the **FAIR spectrum** and help them on a **journey** to make their software m
 We are going to explore the above practices on an example software project we will be working on as part of this
 course.
 
-::::::::::::::::::::::::::::::::::::: challenge
+:::  challenge
 
 Think of a piece of software you use in your research - any computational tool used for data gathering, modelling & simulation, processing & visualising results or others. 
 If you have a bit of code or software you wrote yourself, in any language, feel free to use that.
@@ -162,14 +163,14 @@ Here are some questions to help you assess where on the FAIR spectrum the code i
   * Is it clear what kind of input data it can read and what kind of output data is produced? Will you be able to create the input files and read the output files with the tools your community generally uses? 
   * If you wanted to use this tool as part of a larger data processing pipeline, does it allow you to link it with other tools in standard ways such as an API or command-line interface?
 4. **Reusable**
-  * Can you run the code on your platform/operating system? What programs or libraries do you need to install to make it work (and which versions)? Are these commonly used tools in your field?
+  * Can you run the code on your platform/operating system (is there documentation that covers installation instructions)? What programs or libraries do you need to install to make it work (and which versions)? Are these commonly used tools in your field?
   * Do you have explicit permission to use your collaborators code in your own research and do they expect credit of some form (paper authorship, citation or acknowledgement)? Are you allowed to edit, publish or share the files with others?
   * Is the language used familiar to you and people in your research field? Can you read the variable names in the code and the column names in the data file and understand what they mean?
   * Is the code written in a way that allows you to easily modify or extend it? Can you easily see what parameters to change to make it calculate a different statistic, or run on a different input file?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: solution
+:::  solution
 
 I would give the following scores:
 
