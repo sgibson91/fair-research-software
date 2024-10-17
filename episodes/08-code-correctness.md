@@ -332,6 +332,7 @@ AssertionError
 Notice that this time, our test `test_text_to_duration_float` fails.
 Our assert statement has raised an `AssertionError` - a clear signal that there is a problem in our code that we
 need to fix. 
+
 We know that duration `10:15` should be converted to number `10.25`. 
 What is wrong with our code?
 If we look at our `text_to_duration` function, we may identify the following line of our code as problematic:
@@ -344,7 +345,8 @@ def text_to_duration(duration):
 ```
 
 You may notice that our conversion code is wrong - the minutes component should have been divided by 60 and not 6.
-We were able to spot this tiny bug by testing our code.
+We were able to spot this tiny bug **only by testing our code** (note that just by looking at the result graph there 
+is not way to spot incorrect results).
 
 Let's fix the problematic line and rerun out tests. 
 
@@ -1046,5 +1048,4 @@ the course.
     ensure your code performs correctly under a variety of conditions.
 5.  Test coverage can help you to identify parts of your code that
     require additional testing.
-6. 
 :::
